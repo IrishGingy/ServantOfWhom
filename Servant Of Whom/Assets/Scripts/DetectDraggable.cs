@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+// Reference: https://forum.unity.com/threads/how-to-detect-if-mouse-is-over-ui.1025533/
 public class DetectDraggable : MonoBehaviour
 {
     public GameObject obj;
 
     int DraggableLayer;
+
+    int SlotLayer;
     
     private void Start()
     {
         DraggableLayer = LayerMask.NameToLayer("Draggable");
+        SlotLayer = LayerMask.NameToLayer("Slot");
     }
 
     private void FixedUpdate()
@@ -23,7 +27,9 @@ public class DetectDraggable : MonoBehaviour
     // Returns 'true' if we touched or hovering on Draggable element.
     public bool IsPointerOverUIElement()
     {
-        if (IsPointerOverUIElement(GetEventSystemRaycastResults()) != null)
+        IsPointerOverUIElement(GetEventSystemRaycastResults());
+
+        if (obj != null)
         {
             return true;
         }
@@ -31,19 +37,20 @@ public class DetectDraggable : MonoBehaviour
     }
 
 
-    // Returns 'true' if we touched or hovering on Draggable element.
-    private GameObject IsPointerOverUIElement(List<RaycastResult> eventSystemRaysastResults)
+    // Changes appropriate bool to true if we touched or hovering on element with said layer.
+    private void IsPointerOverUIElement(List<RaycastResult> eventSystemRaysastResults)
     {
         for (int index = 0; index < eventSystemRaysastResults.Count; index++)
         {
             RaycastResult curRaysastResult = eventSystemRaysastResults[index];
+
             if (curRaysastResult.gameObject.layer == DraggableLayer)
             {
                 obj = curRaysastResult.gameObject;
-                return curRaysastResult.gameObject;
+                return;
             }
         }
-        return null;
+        obj = null;
     }
 
 
