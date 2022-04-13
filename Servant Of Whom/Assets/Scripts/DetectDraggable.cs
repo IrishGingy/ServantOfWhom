@@ -20,7 +20,10 @@ public class DetectDraggable : MonoBehaviour
 
     private void FixedUpdate()
     {
-        print(IsPointerOverUIElement() ? "Over draggable" : "Not over draggable");
+        if (obj == null)
+        {
+            print(IsPointerOverUIElement() ? "Over draggable" : "Not over draggable");
+        }
     }
 
 
@@ -50,7 +53,7 @@ public class DetectDraggable : MonoBehaviour
                 return;
             }
         }
-        obj = null;
+        //obj = null;
     }
 
 

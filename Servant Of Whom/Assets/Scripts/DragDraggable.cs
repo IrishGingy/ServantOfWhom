@@ -19,10 +19,10 @@ public class DragDraggable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        detected = d.IsPointerOverUIElement();
-        if (detected && Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             moveObject = true;
+            d.obj = null;
         }
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
@@ -33,7 +33,7 @@ public class DragDraggable : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (moveObject)
+        if (moveObject && d.obj != null)
         {
             Debug.Log("Moving object...");
             d.obj.transform.position = Input.mousePosition;
